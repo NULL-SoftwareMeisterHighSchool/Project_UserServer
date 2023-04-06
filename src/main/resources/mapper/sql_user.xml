@@ -1,0 +1,184 @@
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.project.backend.mapper.UserMapper">
+
+ 	<resultMap type="com.project.backend.domain.User" id="result">
+		<result property="userIdx" column="user_idx" />
+		<result property="email" column="email" />
+		<result property="name" column="name" />
+		<result property="phoneNumber" column="phone_number" />
+		<result property="userType" column="user_type" />
+		<result property="id" column="user_id" />
+		<result property="password" column="password" />
+		<result property="grade" column="grade" />
+		<result property="schoolname" column="school_name" />
+		<result property="schoolYear" column="school_year" />
+		<result property="registerTime" column="register_time" />
+		<result property="approvedYn" column="approved_yn" />
+		<result property="lastLoginTime" column="last_login_time" />
+		<result property="updateTime" column="update_time" />
+		<result property="deletedYn" column="withdrawed_yn"/>
+		<result property="deletedTime" column="withdrawed_time"/>
+		<result property="mailAuth" column="mail_auth"/>
+		<result property="mailKey" column="mail_key"/>
+		<result property="githublink" column="github_link" />
+	</resultMap>
+ 
+	<sql id="sql_select">
+		SELECT
+			   a.user_idx
+			 , a.email
+			 , a.name 
+			 , a.phone_number 
+			 , a.user_type 
+			 , a.password 
+			 , a.grade 
+			 , a.school_year
+			 , DATE_FORMAT(a.register_time, '%Y-%m-%dT%T+09:00') AS register_time
+			 , a.approved_yn 
+			 , DATE_FORMAT(a.last_login_time, '%Y-%m-%dT%T+09:00') AS last_login_time 
+			 , DATE_FORMAT(a.update_time, '%Y-%m-%dT%T+09:00') AS update_time
+			 , a.withdrawed_yn
+			 , DATE_FORMAT(a.withdrawed_time, '%Y-%m-%dT%T+09:00') AS withdrawed_time
+			 , a.mail_auth
+			 , a.mail_key
+			 , a.githublink
+		From user as a;
+	</sql>
+
+ 	<select id="get" resultMap="result">
+ 		<include refid="sql_select"></include>
+		  FROM user AS a
+		 WHERE a.user_idx = #{idx} 
+    </select>
+
+ 	<select id="getByEmail" resultMap="result">
+ 		<include refid="sql_select"></include>
+		  FROM user AS a
+		 WHERE a.email = #{email} 
+    </select>
+
+	<select id="getAuthTime" resultMap="result">
+		<include refid="sql_select"></include>
+		FROM user AS mail_auth
+		WHERE a.email = #{email}
+	</select>
+
+ 	<select id="getCount" resultType="int">
+ 		SELECT COUNT(*)
+ 		  FROM user AS a
+ 		 WHERE a.withdrawed_yn != 'Y'
+    </select>
+
+ 	<select id="getUserList" resultMap="result">
+ 		<include refid="sql_select"></include>
+		  FROM (
+		  	SELECT * 
+		  	  FROM user AS a
+	  	   ) AS a
+ 		 WHERE a.withdrawed_yn != 'Y'
+		 ORDER BY a.user_idx DESC
+	</select>
+
+ 	<select id="selectByStudentId" resultMap="result">
+ 		<include refid="sql_select"></include>
+		  FROM user AS a
+		 WHERE a.school_year = #{schoolYear} 
+		   AND a.class_name = #{className}
+		   AND a.class_no = #{classNo}
+    </select>
+ 
+    <insert id="register" parameterType="com.project.backend.domain.User"
+    	useGeneratedKeys="true" keyProperty="userIdx">
+
+		INSERT INTO user
+		( 
+			  email 
+			, name
+			, phone_number 
+			, user_type 
+			, password 
+			, grade 
+			, school_year
+			, register_time 
+			, approved_yn
+		) 
+		VALUES 
+		( 
+			  #{email} 
+			, #{name} 
+			, #{phoneNumber} 
+			, #{userType} 
+			, #{password} 
+			, #{grade} 
+			, #{schoolYear}
+			, now() 
+			, #{approvedYn}
+		);
+	</insert>
+
+	<insert id="setgithublink" parameterType="com.project.backend.domain.User">
+		INSERT INTO user
+		(
+		 	  githublink
+		)
+		VALUE #{link};
+	</insert>
+
+	<update id="update" parameterType="com.project.backend.domain.User">
+
+		UPDATE user SET 
+			  name = #{name} 
+			, phone_number = #{phoneNumber} 
+			, school_year = #{schoolYear}
+			, update_time = now()
+			, mail_key = #{mailKey}
+			, mail_auth = #{mailAuth}
+		 WHERE user_idx = #{userIdx}
+		  
+	</update>
+
+	<update id="updateAuthkey" parameterType="com.project.backend.domain.User">
+		UPDATE user SET
+		      password = #{password}
+			, mail_key = #{mailKey}
+			, mail_auth = #{mailAuth}
+		WHERE email = #{email}
+	</update>
+
+	<delete id="delete">
+		UPDATE user SET
+			withdrawed_yn = 'Y'
+			, withdrawed_time = now()
+		 WHERE user_idx = #{idx}
+	</delete>
+
+	<update id="updateApprove">
+		UPDATE user SET 
+			  approved_yn = 'Y' 
+		 WHERE user_idx = #{idx} 
+	</update>
+		
+	<update id="updateLastLoginTime" >
+		UPDATE user SET
+			last_login_time = now()
+		 WHERE email = #{email}
+	</update>
+
+	<update id="updatePassword">
+		UPDATE user SET 
+			  password = #{password} 
+		 WHERE user_idx = #{idx} 
+	</update>
+
+	<update id="updateTemporaryPassword">
+		UPDATE user SET 
+			  password = #{password},
+			  password_update_time = now()
+		 WHERE email = #{email} 
+	</update>
+
+	
+</mapper>
