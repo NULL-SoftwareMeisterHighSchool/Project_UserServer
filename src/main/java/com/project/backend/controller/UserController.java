@@ -1,16 +1,21 @@
 package com.project.backend.controller;
 
 import com.project.backend.domain.User;
+import com.project.backend.service.MailService;
 import com.project.backend.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
+import javax.mail.MessagingException;
 
 
 @RestController
 @AllArgsConstructor
 @RequestMapping("/user")
 public class UserController {
-    public final UserService userService;
+    private final UserService userService;
+    private final MailService mailService;
+
     @PutMapping("/edit/{id}")
     public User edituser(User user, @PathVariable int id) {
         userService.update(id, user);
@@ -23,10 +28,11 @@ public class UserController {
         return userService.getwithidx(id);
     }
 
-    @DeleteMapping("/withdraw/{id}")
-    public String withdraw(@PathVariable int id) {
-        //비밀번호 치는 코드 다음에 짜자
-        userService.withdraw(id);
+    @DeleteMapping("/withdraw")
+    public String withdraw(String email) throws MessagingException {
+        mailService.sendmail(email);
+        if ( )
+        userService.withdraw();
         return "회원탈퇴 완료";
     }
 }

@@ -1,6 +1,5 @@
 package com.project.backend.controller;
 
-import com.project.backend.domain.AuthMail;
 import com.project.backend.domain.TokenInfo;
 import com.project.backend.domain.User;
 import com.project.backend.service.MailService;
@@ -33,7 +32,6 @@ public class AuthController {
     public String sendcode(String email) throws MessagingException {
         mailService.sendmail(email) ;
         return mailService.returnsentcode();
-
     }
 
     @PostMapping("/signup")
@@ -44,6 +42,9 @@ public class AuthController {
 
     @PostMapping("/forgetpwd")
     public String forgetpwd() {
+
         return "redirect:/login";
     }
+
+
 }
