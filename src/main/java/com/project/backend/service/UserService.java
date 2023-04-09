@@ -1,5 +1,6 @@
 package com.project.backend.service;
 
+import batang.common.domain.RestResult;
 import com.project.backend.domain.TokenInfo;
 import com.project.backend.domain.User;
 
@@ -24,7 +25,7 @@ public interface UserService {
     /**
      * 주어진 이메일을 가진 사용자 정보를 되돌린다.
      *
-     * @param email email
+     * @param email 사용자 이메일
      * @return 사용자 정보
      */
     public User getwithemail(String email);
@@ -98,12 +99,20 @@ public interface UserService {
     public void changePassword(String oldPassword, String newPassword);
 
     /**
+     * 비밀번호를 잊은 사용자의 비밀번호를 변경한다
+     *
+     * @return
+     * @Param
+     */
+    RestResult.ResultCode forgetpassword(String email);
+
+    /**
      * 주어진 정보로 사용자의 아이디를 찾아 되돌린다.
      *
-     * @param user
+     * @param email
      * @return
      */
-    public String findId(User user);
+    public String finduseridwithemail(String email);
 
     /**
      * 로그인 한다.

@@ -35,6 +35,11 @@ public class User extends RegisterTimeEntity {
     private String userType;
 
     /**
+     * 유저 아이디
+     */
+    private String userid;
+
+    /**
      * 비밀번호
      */
     private String password;

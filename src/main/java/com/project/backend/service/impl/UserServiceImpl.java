@@ -1,11 +1,13 @@
 package com.project.backend.service.impl;
 
 import batang.common.domain.CommonException;
+import batang.common.domain.RestResult;
 import com.project.backend.JwtTokenProvider;
 import com.project.backend.domain.TokenInfo;
 import com.project.backend.domain.User;
 import com.project.backend.domain.UserForSecurity;
 import com.project.backend.mapper.UserMapper;
+import com.project.backend.service.MailService;
 import com.project.backend.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.session.RowBounds;
@@ -17,17 +19,20 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.mail.MessagingException;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
+	private final RestResult restResult;
 	private final UserMapper userMapper;
 	private final PasswordEncoder passwordEncoder;
 	private final AuthenticationManagerBuilder authenticationManagerBuilder;
 	private final JwtTokenProvider jwtTokenProvider;
 	private final SqlSession sqlSession;
+	private final MailService mailService;
 
 	@Override
 	public User getAuthorizedUser() {
@@ -146,12 +151,34 @@ public class UserServiceImpl implements UserService {
 		}
 		
 		userMapper.updatePassword(user.getUserIdx(), passwordEncoder.encode(newPassword));
-
 	}
 
 	@Override
-	public String findId(User user) {
-		//코드 짜야함
+	public RestResult.ResultCode forgetpassword(String email) {
+		User user = getwithemail(email);
+
+		if ( user == null) {
+			return RestResult.ResultCode.UserNotFound;
+		}
+
+		
+
+		try {
+			mailService.sendmail(email);
+		} catch (MessagingException e) {
+			throw new RuntimeException(e);
+		}
+
+
+		return RestResult.ResultCode.Success;
+	}
+
+	@Override
+	public String finduseridwithemail(String email) {
+
+		User user = getwithemail(email);
+		user.getUserid();
+
 		return null;
 	}
 
