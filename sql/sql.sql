@@ -15,7 +15,6 @@ CREATE TABLE user (
                       update_time	    	DATETIME									COMMENT '수정 시간',
                       withdrawed_yn		    CHAR(1)			NOT NULL	DEFAULT 'N'		COMMENT '탈퇴 여부',
                       withdrawed_time		DATETIME									COMMENT '탈퇴 시간',
-
                       PRIMARY KEY (user_idx)
 );
 
@@ -41,3 +40,8 @@ CREATE TABLE comment (
                     parents                 INT             NOT NULL                    COMMENT '부모 댓글 번호',
                     PRIMARY KEY (comment_idx)
 );
+
+CREATE TABLE schoolauthcode (
+                    school_authcode         VARCHAR(100)    NOT NULL    AUTO_INCREMENT COMMENT '학교,기수별 코드',
+                    PRIMARY KEY (school_authcode)
+)
