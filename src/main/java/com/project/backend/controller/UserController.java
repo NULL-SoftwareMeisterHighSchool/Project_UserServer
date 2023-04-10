@@ -31,8 +31,14 @@ public class UserController {
     @DeleteMapping("/withdraw")
     public String withdraw(String email) throws MessagingException {
         mailService.sendmail(email);
-        if ( )
-        userService.withdraw();
+
+        //만약 회원이 존재하지 않는다면
+        if ( true ) {
+
+        } else {
+            //회원이 존재한다면
+            //userService.withdraw(id);
+        }
         return "회원탈퇴 완료";
     }
 }
