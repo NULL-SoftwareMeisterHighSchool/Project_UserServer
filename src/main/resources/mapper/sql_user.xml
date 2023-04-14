@@ -30,7 +30,7 @@
 		SELECT
 			   a.user_idx
 			 , a.email
-			 , a.name 
+			 , a.nickname
 			 , a.phone_number 
 			 , a.user_type 
 			 , a.password 
@@ -44,24 +44,24 @@
 			 , DATE_FORMAT(a.withdrawed_time, '%Y-%m-%dT%T+09:00') AS withdrawed_time
 			 , a.mail_auth
 			 , a.mail_key
-			 , a.githublink
+			 , a.github_link
 		From user as a;
 	</sql>
 
  	<select id="get" resultMap="result">
- 		<include refid="sql_select"></include>
+ 		<include refid="sql_select"/>
 		  FROM user AS a
 		 WHERE a.user_idx = #{idx} 
     </select>
 
  	<select id="getByEmail" resultMap="result">
- 		<include refid="sql_select"></include>
+ 		<include refid="sql_select"/>
 		  FROM user AS a
 		 WHERE a.email = #{email} 
     </select>
 
 	<select id="getAuthTime" resultMap="result">
-		<include refid="sql_select"></include>
+		<include refid="sql_select"/>
 		FROM user AS mail_auth
 		WHERE a.email = #{email}
 	</select>
@@ -73,7 +73,7 @@
     </select>
 
  	<select id="getUserList" resultMap="result">
- 		<include refid="sql_select"></include>
+ 		<include refid="sql_select"/>
 		  FROM (
 		  	SELECT * 
 		  	  FROM user AS a
@@ -83,7 +83,7 @@
 	</select>
 
  	<select id="selectByStudentId" resultMap="result">
- 		<include refid="sql_select"></include>
+ 		<include refid="sql_select"/>
 		  FROM user AS a
 		 WHERE a.school_year = #{schoolYear} 
 		   AND a.class_name = #{className}
@@ -96,7 +96,7 @@
 		INSERT INTO user
 		( 
 			  email 
-			, name
+			, nickname
 			, phone_number 
 			, user_type 
 			, password 
@@ -122,7 +122,7 @@
 	<insert id="setgithublink" parameterType="com.project.backend.domain.User">
 		INSERT INTO user
 		(
-		 	  githublink
+		 	  github_link
 		)
 		VALUE #{link};
 	</insert>
@@ -130,7 +130,7 @@
 	<update id="update" parameterType="com.project.backend.domain.User">
 
 		UPDATE user SET 
-			  name = #{name} 
+			  nickname = #{name}
 			, phone_number = #{phoneNumber} 
 			, school_year = #{schoolYear}
 			, update_time = now()
