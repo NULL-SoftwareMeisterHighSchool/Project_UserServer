@@ -65,8 +65,9 @@ public interface UserService {
      * 주어진 idx을 가진 회원을 탈퇴 처리한다.
      *
      * @param userIdx idx
+     * @return
      */
-    public void withdraw(int userIdx);
+    public RestResult.ResultCode withdraw(int userIdx);
 
     /**
      * 주어진 email 사용자의 인증키와 인증시간, 비밀번호를 변경 한다

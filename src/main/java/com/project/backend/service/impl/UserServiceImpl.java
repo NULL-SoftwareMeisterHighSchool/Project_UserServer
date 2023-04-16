@@ -101,8 +101,7 @@ public class UserServiceImpl implements UserService {
 		} else {
 			user.setApprovedYn("N");
 		}
-		
-		
+
 		userMapper.register(user);
 		return getwithidx(user.getUserIdx());
 	}
@@ -124,13 +123,25 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void withdraw(int userIdx) {
+	public RestResult.ResultCode withdraw(int userIdx) {
+
+		//id가 있는 유저인가? ( 탈퇴하지 않은 유저인가? )
+		if ( true ) {
+			//user가 없다요
+			return RestResult.ResultCode.UserNotFound;
+		}
+		
+		deleteuser(userIdx);
+
+		return RestResult.ResultCode.Success;
+	}
+
+	private void deleteuser(int userIdx) {
 		userMapper.delete(userIdx);
 	}
 	
 	@Override
 	public void approve(int userIdx) {
-
 		userMapper.updateApprove(userIdx);
 	}
 
@@ -161,8 +172,6 @@ public class UserServiceImpl implements UserService {
 			return RestResult.ResultCode.UserNotFound;
 		}
 
-		
-
 		try {
 			mailService.sendmail(email);
 		} catch (MessagingException e) {
@@ -177,9 +186,7 @@ public class UserServiceImpl implements UserService {
 	public String finduseridwithemail(String email) {
 
 		User user = getwithemail(email);
-		user.getUserid();
-
-		return null;
+		return user.getUserid();
 	}
 
 	@Override
