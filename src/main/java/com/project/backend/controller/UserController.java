@@ -16,6 +16,11 @@ public class UserController {
     private final UserService userService;
     private final MailService mailService;
 
+    @GetMapping("/edit/{id}")
+    public User edituser(@PathVariable int id) {
+        return userService.getwithidx(id);
+    }
+
     @PutMapping("/edit/{id}")
     public User edituser(User user, @PathVariable int id) {
         userService.update(id, user);
