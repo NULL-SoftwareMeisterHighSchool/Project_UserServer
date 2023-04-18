@@ -16,7 +16,7 @@ CREATE TABLE user (
                       withdrawed_yn		    CHAR(1)			NOT NULL	DEFAULT 'N'		COMMENT '탈퇴 여부',
                       withdrawed_time		DATETIME									COMMENT '탈퇴 시간',
                       password_update_time  DATETIME                                    COMMENT '비번 최종변경일',
-                      mail_auth             VARCHAR(100)                                COMMENT '사용자가 입력한 인증키',
+                      mail_auth             CHAR(1)                                     COMMENT '인증 여부',
                       mail_key              VARCHAR(100)                                COMMENT '메일인증키 저장',
                       github_link           VARCHAR(255)                                COMMENT '깃허브 링크',
                       PRIMARY KEY (user_idx)
