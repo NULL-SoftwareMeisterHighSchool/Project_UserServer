@@ -27,6 +27,11 @@ public class UserController {
         return userService.getwithidx(id);
     }
 
+    @GetMapping("/findid/{email}")
+    public String finduserid(@PathVariable String email) {
+        return userService.finduseridwithemail(email);
+    }
+
     @PutMapping("/edit/pwd/{id}")
     public User changepwd(@PathVariable int id, String nowpwd, String newpwd) {
         userService.changePassword(nowpwd, newpwd);
