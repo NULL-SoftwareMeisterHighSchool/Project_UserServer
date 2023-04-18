@@ -22,12 +22,6 @@ public class AuthController {
         return tokenInfo;
     }
 
-    @GetMapping("/login/{id}")
-    public String signin(@PathVariable int id) {
-        //userService.updateLastLoginTime();
-        return "b";
-    }
-
     @PostMapping("/sendcode")
     public String sendcode(String email) throws MessagingException {
         mailService.sendmail(email) ;
