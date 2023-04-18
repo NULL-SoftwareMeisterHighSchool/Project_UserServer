@@ -1,7 +1,6 @@
 package com.project.backend.service.impl;
 
 import batang.common.domain.CommonException;
-import batang.common.domain.RestResult;
 import com.project.backend.JwtTokenProvider;
 import com.project.backend.domain.TokenInfo;
 import com.project.backend.domain.User;
@@ -26,7 +25,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
-	private final RestResult restResult;
 	private final UserMapper userMapper;
 	private final PasswordEncoder passwordEncoder;
 	private final AuthenticationManagerBuilder authenticationManagerBuilder;
@@ -123,17 +121,18 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public RestResult.ResultCode withdraw(int userIdx) {
+	public String withdraw(String email) {
 
 		//id가 있는 유저인가? ( 탈퇴하지 않은 유저인가? )
 		if ( true ) {
-			//user가 없다요
-			return RestResult.ResultCode.UserNotFound;
+			//user 없다요
+			return "유저가 없다";
 		}
+		int userIdx = getwithemail(email).getUserIdx();
 		
 		deleteuser(userIdx);
 
-		return RestResult.ResultCode.Success;
+		return "성공함";
 	}
 
 	private void deleteuser(int userIdx) {
@@ -165,11 +164,11 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public RestResult.ResultCode forgetpassword(String email) {
+	public String forgetpassword(String email) {
 		User user = getwithemail(email);
 
 		if ( user == null) {
-			return RestResult.ResultCode.UserNotFound;
+			return "유저가 없다";
 		}
 
 		try {
@@ -179,7 +178,7 @@ public class UserServiceImpl implements UserService {
 		}
 
 
-		return RestResult.ResultCode.Success;
+		return "성공";
 	}
 
 	@Override
@@ -195,6 +194,8 @@ public class UserServiceImpl implements UserService {
 		Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
 
 		TokenInfo tokenInfo = jwtTokenProvider.generateToken(authentication);
+
+		updateLastLoginTime(email);
 
 		return tokenInfo;
 	}

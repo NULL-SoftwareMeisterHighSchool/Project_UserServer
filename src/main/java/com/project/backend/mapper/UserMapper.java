@@ -28,7 +28,7 @@ public interface UserMapper {
 	/**
 	 * 사용자 목록을 되돌린다.
 	 *
-	 * @return
+	 * @return user list
 	 */
 	public List<User> getUserList();
 

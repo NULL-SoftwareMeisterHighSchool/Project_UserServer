@@ -1,6 +1,5 @@
 package com.project.backend.service;
 
-import batang.common.domain.RestResult;
 import com.project.backend.domain.TokenInfo;
 import com.project.backend.domain.User;
 
@@ -64,10 +63,10 @@ public interface UserService {
     /**
      * 주어진 idx을 가진 회원을 탈퇴 처리한다.
      *
-     * @param userIdx idx
+     * @param email email
      * @return
      */
-    public RestResult.ResultCode withdraw(int userIdx);
+    public String withdraw(String email);
 
     /**
      * 주어진 email 사용자의 인증키와 인증시간, 비밀번호를 변경 한다
@@ -105,7 +104,7 @@ public interface UserService {
      * @return
      * @Param
      */
-    RestResult.ResultCode forgetpassword(String email);
+    String forgetpassword(String email);
 
     /**
      * 주어진 정보로 사용자의 아이디를 찾아 되돌린다.
