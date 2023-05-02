@@ -48,4 +48,9 @@ CREATE TABLE comment (
 CREATE TABLE schoolauthcode (
                     school_authcode         VARCHAR(100)    NOT NULL    AUTO_INCREMENT COMMENT 'idx',
                     PRIMARY KEY (school_authcode)
-)
+);
+
+CREATE TABLE githubranking (
+                    ranking_idx             INT             NOT NULL    AUTO_INCREMENT COMMENT 'idx',
+                    PRIMARY KEY (ranking_idx)
+);

@@ -179,6 +179,5 @@
 			  password_update_time = now()
 		 WHERE email = #{email} 
 	</update>
-
 	
 </mapper>
