@@ -44,11 +44,11 @@ public class UserController {
         userService.withdraw(email);
 
         //만약 회원이 존재하지 않는다면
-        if ( true ) {
-
+        if ( userService.getwithemail(email) == null ) {
+            return "유저가 없잖ㅇ아";
         } else {
             //회원이 존재한다면
-            //userService.withdraw(id);
+            userService.withdraw(email);
         }
         return "회원탈퇴 완료";
     }
