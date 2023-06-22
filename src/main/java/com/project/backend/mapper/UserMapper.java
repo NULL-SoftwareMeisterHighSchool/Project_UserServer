@@ -48,7 +48,7 @@ public interface UserMapper {
 	public int register(User user);
 
 	/**
-	 * 깃허브 링크 넣는다
+	 * 깃허브 링크를 유저 정보에 저장한다.
 	 */
 	public void setgithublink(String link);
 

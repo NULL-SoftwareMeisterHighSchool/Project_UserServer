@@ -1,6 +1,7 @@
 package com.project.backend.service.impl;
 
-import batang.common.domain.CommonException;
+import com.project.backend.domain.UserDTO;
+import setting.common.domain.CommonException;
 import com.project.backend.JwtTokenProvider;
 import com.project.backend.domain.TokenInfo;
 import com.project.backend.domain.User;
@@ -90,9 +91,9 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
-	public User register(User user) {
+	public User register(UserDTO userDTO) {
+		User user = convertToUser(userDTO);
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
-		user.setGrade(1);
 
 		if ("G".equals(user.getUserType())) {
 			user.setApprovedYn("Y");
@@ -104,14 +105,34 @@ public class UserServiceImpl implements UserService {
 		return getwithidx(user.getUserIdx());
 	}
 
+	private User convertToUser(UserDTO userDTO) {
+		User user = new User();
+		user.setEmail(userDTO.getEmail());
+		user.setNickname(userDTO.getNickname());
+		user.setName(userDTO.getName());
+		user.setUserid(userDTO.getUserid());
+		user.setUserType(userDTO.getUserType());
+		user.setPassword(userDTO.getPassword());
+		user.setGrade(userDTO.getGrade());
+		user.setSchoolName(userDTO.getschoolName());
+		user.setSchoolYear(userDTO.getSchoolYear());
+
+		return user;
+	}
+
+
+
+
+
 	@Override
 	public void update(int idx, User updateuser) {
 		User user = userMapper.get(idx);
 
 		if ( user != null) {
+			user.setEmail(updateuser.getEmail());
 			user.setName(updateuser.getName());
-			user.setPhoneNumber(updateuser.getPhoneNumber());
-
+			user.setUserid(updateuser.getUserid());
+			user.setSchoolYear(updateuser.getSchoolYear());
 		}
 	}
 

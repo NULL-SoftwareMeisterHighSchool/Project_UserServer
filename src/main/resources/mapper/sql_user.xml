@@ -7,10 +7,11 @@
  	<resultMap type="com.project.backend.domain.User" id="result">
 		<result property="userIdx" column="user_idx" />
 		<result property="email" column="email" />
-		<result property="name" column="name" />
-		<result property="phoneNumber" column="phone_number" />
-		<result property="userType" column="user_type" />
+		<result property="nickname" column="nickname"/>
+		<result property="userType" column="user_type"/>
 		<result property="id" column="user_id" />
+		<result property="name" column="name" />
+		<result property="userType" column="user_type" />
 		<result property="password" column="password" />
 		<result property="grade" column="grade" />
 		<result property="schoolname" column="school_name" />
@@ -24,28 +25,33 @@
 		<result property="mailAuth" column="mail_auth"/>
 		<result property="mailKey" column="mail_key"/>
 		<result property="githublink" column="github_link" />
+		<result property="commitcount" column="commit_count"/>
+		<result property="rankingYn" column="ranking_yn"/>
 	</resultMap>
  
 	<sql id="sql_select">
 		SELECT
-			   a.user_idx
-			 , a.email
-			 , a.nickname
-			 , a.phone_number 
-			 , a.user_type 
-			 , a.password 
-			 , a.grade 
-			 , a.school_year
-			 , DATE_FORMAT(a.register_time, '%Y-%m-%dT%T+09:00') AS register_time
-			 , a.approved_yn 
-			 , DATE_FORMAT(a.last_login_time, '%Y-%m-%dT%T+09:00') AS last_login_time 
-			 , DATE_FORMAT(a.update_time, '%Y-%m-%dT%T+09:00') AS update_time
-			 , a.withdrawed_yn
-			 , DATE_FORMAT(a.withdrawed_time, '%Y-%m-%dT%T+09:00') AS withdrawed_time
-			 , a.mail_auth
-			 , a.mail_key
-			 , a.github_link
-		From user as a;
+			a.user_idx,
+			a.email,
+			a.nickname,
+			a.name,
+			a.user_type,
+			a.password,
+			a.grade,
+			a.school_name,
+			a.school_year,
+			DATE_FORMAT(a.register_time, '%Y-%m-%dT%T+09:00') AS register_time,
+			a.approved_yn,
+			DATE_FORMAT(a.last_login_time, '%Y-%m-%dT%T+09:00') AS last_login_time,
+			DATE_FORMAT(a.update_time, '%Y-%m-%dT%T+09:00') AS update_time,
+			a.withdrawed_yn,
+			DATE_FORMAT(a.withdrawed_time, '%Y-%m-%dT%T+09:00') AS withdrawed_time,
+			a.mail_auth,
+			a.mail_key,
+			a.github_link,
+			a.commit_count,
+			a.ranking_yn
+		FROM user AS a
 	</sql>
 
  	<select id="get" resultMap="result">
@@ -87,34 +93,37 @@
 		  FROM user AS a
 		 WHERE a.school_year = #{schoolYear} 
 		   AND a.class_name = #{className}
-		   AND a.class_no = #{classNo}
     </select>
  
     <insert id="register" parameterType="com.project.backend.domain.User"
     	useGeneratedKeys="true" keyProperty="userIdx">
 
 		INSERT INTO user
-		( 
-			  email 
+		(
+			 email
 			, nickname
-			, phone_number 
-			, user_type 
-			, password 
-			, grade 
+			, name
+			, id
+			, user_type
+			, school_name
 			, school_year
-			, register_time 
+			, password
+			, grade
+			, register_time
 			, approved_yn
-		) 
+		)
 		VALUES 
 		( 
-			  #{email} 
-			, #{name} 
-			, #{phoneNumber} 
-			, #{userType} 
-			, #{password} 
-			, #{grade} 
+			 #{email}
+			, #{nickname}
+			, #{name}
+			, #{userid}
+			, #{userType}
+			, #{schoolName}
 			, #{schoolYear}
-			, now() 
+			, #{password}
+			, #{grade}
+			, now()
 			, #{approvedYn}
 		);
 	</insert>
@@ -129,9 +138,10 @@
 
 	<update id="update" parameterType="com.project.backend.domain.User">
 
-		UPDATE user SET 
-			  nickname = #{name}
-			, phone_number = #{phoneNumber} 
+		UPDATE user SET
+			  email = #{email}
+			, name = #{name}
+			, nickname = #{userid}
 			, school_year = #{schoolYear}
 			, update_time = now()
 			, mail_key = #{mailKey}

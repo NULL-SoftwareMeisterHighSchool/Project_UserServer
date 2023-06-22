@@ -2,6 +2,7 @@ package com.project.backend.service;
 
 import com.project.backend.domain.TokenInfo;
 import com.project.backend.domain.User;
+import com.project.backend.domain.UserDTO;
 
 import java.util.List;
 
@@ -51,7 +52,7 @@ public interface UserService {
      * @param user 사용자 정보
      * @return 등록된 사용자의 idx
      */
-    public User register(User user);
+    public User register(UserDTO user);
 
     /**
      * 사용자 정보를 갱신한다.
@@ -61,7 +62,7 @@ public interface UserService {
     public void update(int id, User user);
 
     /**
-     * 주어진 idx을 가진 회원을 탈퇴 처리한다.
+     * 주어진 email을 가진 회원을 탈퇴 처리한다.
      *
      * @param email email
      * @return
