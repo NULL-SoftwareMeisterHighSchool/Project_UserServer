@@ -1,4 +1,4 @@
-package batang.common.domain;
+package setting.common.domain;
 
 public class Site extends Domain
 {

@@ -1,4 +1,4 @@
-package batang.common.controller;
+package setting.common.controller;
 
 public class CommonRestControllerPrototype
 {

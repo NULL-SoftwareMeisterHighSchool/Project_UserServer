@@ -1,4 +1,6 @@
-package batang.common.entity;
+package setting.common.entity;
+
+import setting.common.domain.Domain;
 
 import java.sql.Timestamp;
 import java.text.ParseException;
@@ -6,7 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-public abstract class Entity<T extends batang.common.domain.Domain>
+public abstract class Entity<T extends Domain>
 {
 	public static final SimpleDateFormat DATE_TIME_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.KOREAN);
 	public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd", Locale.KOREAN);

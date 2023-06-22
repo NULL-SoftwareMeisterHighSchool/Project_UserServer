@@ -1,4 +1,4 @@
-package batang.common.controller;
+package setting.common.controller;
 
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;

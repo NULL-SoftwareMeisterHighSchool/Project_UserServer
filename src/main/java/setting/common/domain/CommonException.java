@@ -1,6 +1,4 @@
-package batang.common.domain;
-
-import batang.common.domain.RestResult.ResultCode;
+package setting.common.domain;
 
 /**
  * 시스템에서 발생하는 공통적으로 사용 가능한 기본적인 예외다.
@@ -12,7 +10,7 @@ public class CommonException extends RuntimeException
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private ResultCode resultCode = ResultCode.Fail;
+	private RestResult.ResultCode resultCode = RestResult.ResultCode.Fail;
 	
 	public CommonException()
 	{
@@ -40,12 +38,12 @@ public class CommonException extends RuntimeException
 		super(cause);
 	}
 
-	public void setResultCode(ResultCode resultCode)
+	public void setResultCode(RestResult.ResultCode resultCode)
 	{
 		this.resultCode = resultCode;
 	}
 	
-	public ResultCode getResultCode()
+	public RestResult.ResultCode getResultCode()
 	{
 		return resultCode;
 	}

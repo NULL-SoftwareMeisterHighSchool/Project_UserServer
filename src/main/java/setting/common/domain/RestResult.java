@@ -1,4 +1,4 @@
-package batang.common.domain;
+package setting.common.domain;
 
 /**
  * REST API 결과를 나타내는 클래스다.

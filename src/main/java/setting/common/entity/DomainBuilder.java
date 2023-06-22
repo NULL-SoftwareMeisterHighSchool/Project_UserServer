@@ -1,6 +1,6 @@
-package batang.common.entity;
+package setting.common.entity;
 
-import batang.common.domain.Domain;
+import setting.common.domain.Domain;
 
 import java.util.LinkedList;
 import java.util.List;

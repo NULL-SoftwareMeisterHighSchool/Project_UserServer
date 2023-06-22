@@ -1,6 +1,6 @@
-package batang.common.controller;
+package setting.common.controller;
 
-import batang.common.domain.CommonException;
+import setting.common.domain.CommonException;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 
