@@ -38,8 +38,8 @@ public class UserController {
         return userService.getwithidx(id);
     }
 
-    @DeleteMapping("/withdraw")
-    public String withdraw(String email) throws MessagingException {
+    @DeleteMapping("/withdraw/{email}")
+    public String withdraw(@PathVariable String email) throws MessagingException {
         mailService.sendmail(email);
         userService.withdraw(email);
 

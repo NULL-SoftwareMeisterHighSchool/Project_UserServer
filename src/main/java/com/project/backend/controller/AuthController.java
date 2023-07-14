@@ -35,7 +35,6 @@ public class AuthController {
     public ResponseEntity<String> student_register(@RequestBody UserDTO userDTO) {
         userService.register(userDTO);
         userDTO.setUserType("S");
-        userDTO.setGrade(1);
         return ResponseEntity.ok("User registered successfully");
     }
 

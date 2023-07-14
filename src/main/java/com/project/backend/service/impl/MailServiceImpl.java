@@ -21,7 +21,6 @@ public class MailServiceImpl implements MailService {
         Random random = new Random();
         StringBuffer key = new StringBuffer();
 
-
         for (int i = 0 ; i < 6 ; i++) {
             int index = random.nextInt(3);
 

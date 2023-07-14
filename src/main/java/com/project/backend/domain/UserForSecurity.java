@@ -28,13 +28,8 @@ public class UserForSecurity implements UserDetails {
 		SimpleGrantedAuthority authority = new SimpleGrantedAuthority("ROLE_USER");
 		Collection<SimpleGrantedAuthority> authorities = new ArrayList<SimpleGrantedAuthority>();
 		authorities.add(authority);
-		
-		if (user.getGrade() >= 7) {
-			authority = new SimpleGrantedAuthority("ROLE_ADMIN");
-			authorities.add(authority);
-		}
 
-		if (user.getGrade() == 9) {
+		if (user.getUserType() == "Z") {
 			authority = new SimpleGrantedAuthority("ROLE_SUPERVISOR");
 			authorities.add(authority);
 		}

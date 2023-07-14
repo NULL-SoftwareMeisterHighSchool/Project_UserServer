@@ -108,12 +108,10 @@ public class UserServiceImpl implements UserService {
 	private User convertToUser(UserDTO userDTO) {
 		User user = new User();
 		user.setEmail(userDTO.getEmail());
-		user.setNickname(userDTO.getNickname());
 		user.setName(userDTO.getName());
 		user.setUserid(userDTO.getUserid());
 		user.setUserType(userDTO.getUserType());
 		user.setPassword(userDTO.getPassword());
-		user.setGrade(userDTO.getGrade());
 		user.setSchoolName(userDTO.getschoolName());
 		user.setSchoolYear(userDTO.getSchoolYear());
 

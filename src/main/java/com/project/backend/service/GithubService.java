@@ -4,5 +4,5 @@ public interface GithubService {
     /**
      * @return 자신의 랭킹
      */
-    String getmyranking();
+    int[] getmyranking();
 }

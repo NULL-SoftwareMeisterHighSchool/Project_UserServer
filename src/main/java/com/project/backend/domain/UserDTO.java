@@ -2,12 +2,10 @@ package com.project.backend.domain;
 
 public class UserDTO {
     private String email;
-    private String nickname;
     private String name;
     private String userid;
     private String userType;
     private String password;
-    private int grade;
     private Integer schoolName;
     private Integer schoolYear;
 
@@ -17,10 +15,6 @@ public class UserDTO {
 
     public String getEmail() {
         return this.email;
-    }
-
-    public String getNickname() {
-        return this.nickname;
     }
 
     public String getName() {
@@ -39,9 +33,6 @@ public class UserDTO {
         return this.password;
     }
 
-    public int getGrade() {
-        return this.grade;
-    }
 
     public Integer getschoolName() {
         return this.schoolName;
@@ -51,7 +42,4 @@ public class UserDTO {
         return this.schoolYear;
     }
 
-    public void setGrade(int s) {
-        this.grade = s;
-    }
 }
