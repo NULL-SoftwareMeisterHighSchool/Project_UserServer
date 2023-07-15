@@ -133,8 +133,6 @@
 			, name = #{name}
 			, school_year = #{schoolYear}
 			, update_time = now()
-			, mail_key = #{mailKey}
-			, mail_auth = #{mailAuth}
 		 WHERE user_idx = #{userIdx}
 
 	</update>

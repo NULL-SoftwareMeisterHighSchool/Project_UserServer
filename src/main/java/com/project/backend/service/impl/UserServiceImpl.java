@@ -123,7 +123,7 @@ public class UserServiceImpl implements UserService {
 
 
 	@Override
-	public void update(int idx, User updateuser) {
+	public User update(int idx, User updateuser) {
 		User user = userMapper.get(idx);
 
 		if ( user != null) {
@@ -132,6 +132,7 @@ public class UserServiceImpl implements UserService {
 			user.setUserid(updateuser.getUserid());
 			user.setSchoolYear(updateuser.getSchoolYear());
 		}
+		return user;
 	}
 
 	@Override
@@ -169,7 +170,7 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
-	public void changePassword(String oldPassword, String newPassword) {
+	public boolean changePassword(String oldPassword, String newPassword) {
 		User user = getAuthorizedUser();
 		if (user == null) {
 			throw new CommonException("user not found");
@@ -180,14 +181,16 @@ public class UserServiceImpl implements UserService {
 		}
 		
 		userMapper.updatePassword(user.getUserIdx(), passwordEncoder.encode(newPassword));
+
+		return true;
 	}
 
 	@Override
-	public String forgetpassword(String email) {
+	public boolean forgetpassword(String email) {
 		User user = getwithemail(email);
 
 		if ( user == null) {
-			return "유저가 없다";
+			return false;
 		}
 
 		try {
@@ -195,9 +198,7 @@ public class UserServiceImpl implements UserService {
 		} catch (MessagingException e) {
 			throw new RuntimeException(e);
 		}
-
-
-		return "성공";
+		return true;
 	}
 
 	@Override

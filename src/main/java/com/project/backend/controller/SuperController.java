@@ -21,5 +21,6 @@ public class SuperController {
         return userService.getUserList(0, userService.getCount());
     }
 
-
+    //이메일로 유저 검색
+    //
 }

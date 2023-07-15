@@ -58,8 +58,9 @@ public interface UserService {
      * 사용자 정보를 갱신한다.
      *
      * @param user 사용자 정보
+     * @return
      */
-    public void update(int id, User user);
+    public User update(int id, User user);
 
     /**
      * 주어진 email을 가진 회원을 탈퇴 처리한다.
@@ -96,8 +97,9 @@ public interface UserService {
      *
      * @param oldPassword
      * @param newPassword
+     * @return
      */
-    public void changePassword(String oldPassword, String newPassword);
+    public boolean changePassword(String oldPassword, String newPassword);
 
     /**
      * 비밀번호를 잊은 사용자의 비밀번호를 변경한다
@@ -105,7 +107,7 @@ public interface UserService {
      * @return
      * @Param
      */
-    String forgetpassword(String email);
+    boolean forgetpassword(String email);
 
     /**
      * 주어진 정보로 사용자의 아이디를 찾아 되돌린다.
