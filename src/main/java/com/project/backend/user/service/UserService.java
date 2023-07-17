@@ -1,8 +1,8 @@
-package com.project.backend.service;
+package com.project.backend.user.service;
 
-import com.project.backend.domain.TokenInfo;
-import com.project.backend.domain.User;
-import com.project.backend.domain.UserDTO;
+import com.project.backend.user.domain.TokenInfo;
+import com.project.backend.user.domain.User;
+import com.project.backend.user.domain.UserDTO;
 
 import java.util.List;
 
@@ -68,7 +68,7 @@ public interface UserService {
      * @param email email
      * @return
      */
-    public String withdraw(String email);
+    public boolean withdraw(String email);
 
     /**
      * 주어진 email 사용자의 인증키와 인증시간, 비밀번호를 변경 한다

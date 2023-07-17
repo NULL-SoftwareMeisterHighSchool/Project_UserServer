@@ -1,4 +1,4 @@
-package com.project.backend.domain;
+package com.project.backend.user.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

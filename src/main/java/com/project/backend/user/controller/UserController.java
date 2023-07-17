@@ -1,9 +1,9 @@
-package com.project.backend.controller;
+package com.project.backend.user.controller;
 
 import com.project.backend.JwtAuthenticationFilter;
-import com.project.backend.domain.User;
-import com.project.backend.service.MailService;
-import com.project.backend.service.UserService;
+import com.project.backend.user.domain.User;
+import com.project.backend.user.service.MailService;
+import com.project.backend.user.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -75,16 +75,19 @@ public class UserController {
     public ResponseEntity<String> withdraw(@PathVariable int id) {
         User user = userService.getAuthorizedUser();
 
-        if ( user.getUserIdx() != id) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("");
-        } else if ( user == null) {
+        if ( user == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("");
+        } else if ( user.getUserIdx() != id) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("");
         }
 
         String user_email = user.getEmail();
+        if ( userService.withdraw(user_email)) {
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("회원탈퇴 실패");
+        }
 
-        userService.withdraw(user_email);
 
-i               
     }
 }

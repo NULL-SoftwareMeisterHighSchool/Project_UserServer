@@ -1,14 +1,14 @@
-package com.project.backend.service.impl;
+package com.project.backend.user.service.impl;
 
-import com.project.backend.domain.UserDTO;
+import com.project.backend.user.domain.UserDTO;
+import com.project.backend.user.service.MailService;
+import com.project.backend.user.service.UserService;
 import setting.common.domain.CommonException;
 import com.project.backend.JwtTokenProvider;
-import com.project.backend.domain.TokenInfo;
-import com.project.backend.domain.User;
-import com.project.backend.domain.UserForSecurity;
-import com.project.backend.mapper.UserMapper;
-import com.project.backend.service.MailService;
-import com.project.backend.service.UserService;
+import com.project.backend.user.domain.TokenInfo;
+import com.project.backend.user.domain.User;
+import com.project.backend.user.domain.UserForSecurity;
+import com.project.backend.user.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
@@ -141,18 +141,18 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public String withdraw(String email) {
+	public boolean withdraw(String email) {
 
 		//id가 있는 유저인가? ( 탈퇴하지 않은 유저인가? )
-		if ( true ) {
+		if ( getwithemail(email) == null ) {
 			//user 없다요
-			return "유저가 없다";
+			return false;
 		}
 		int userIdx = getwithemail(email).getUserIdx();
-		
+
 		deleteuser(userIdx);
 
-		return "성공함";
+		return true;
 	}
 
 	private void deleteuser(int userIdx) {

@@ -1,9 +1,9 @@
-package com.project.backend.service.impl;
+package com.project.backend.user.service.impl;
 
-import com.project.backend.domain.User;
-import com.project.backend.domain.UserForSecurity;
-import com.project.backend.mapper.UserMapper;
-import com.project.backend.service.CustomUserDetailsService;
+import com.project.backend.user.domain.User;
+import com.project.backend.user.domain.UserForSecurity;
+import com.project.backend.user.mapper.UserMapper;
+import com.project.backend.user.service.CustomUserDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

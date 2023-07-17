@@ -1,6 +1,6 @@
-package com.project.backend.service.impl;
+package com.project.backend.user.service.impl;
 
-import com.project.backend.service.MailService;
+import com.project.backend.user.service.MailService;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;

@@ -1,11 +1,12 @@
-package com.project.backend.service.impl;
+package com.project.backend.user.service.impl;
 
-import com.project.backend.domain.User;
-import com.project.backend.service.UserService;
+import com.project.backend.user.domain.User;
+import com.project.backend.user.service.GithubService;
+import com.project.backend.user.service.UserService;
 import org.springframework.stereotype.Service;
 
 @Service
-public class GithubServiceImpl implements com.project.backend.service.GithubService {
+public class GithubServiceImpl implements GithubService {
 
     UserService userService;
     User user;

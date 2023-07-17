@@ -1,6 +1,5 @@
-package com.project.backend.domain;
+package com.project.backend.user.domain;
 
-import com.project.backend.service.UserService;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
