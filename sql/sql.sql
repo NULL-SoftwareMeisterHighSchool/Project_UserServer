@@ -37,3 +37,23 @@ CREATE TABLE githubranking (
                     ranking_idx             INT             NOT NULL    AUTO_INCREMENT COMMENT 'idx',
                     PRIMARY KEY (ranking_idx)
 );
+
+/*
+    ARTICLE
+ 	for _, article := range articles {
+		elems = append(elems, &pb.ListArticleElement{
+			ArticleID: uint32(article.ID),
+			AuthorID:  uint32(article.AuthorID),
+			Title:     article.Title,
+			Summary:   article.Summary,
+			Type:      pb.ArticleType(article.Type),
+			IsPrivate: article.IsPrivate,
+			CreatedAt: timestamppb.New(article.CreatedAt),
+			Views:     article.Views,
+			Likes:     uint32(article.Likes),
+			Thumbnail: article.Thumbnail,
+			IsAuthor:  article.IsAuthor,
+			Comments:  uint32(article.Comments),
+		})
+	}
+ */

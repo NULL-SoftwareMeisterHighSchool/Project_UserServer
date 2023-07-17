@@ -2,9 +2,9 @@
 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.project.backend.mapper.UserMapper">
+<mapper namespace="com.project.backend.user.mapper.UserMapper">
 
- 	<resultMap type="com.project.backend.domain.User" id="result">
+ 	<resultMap type="com.project.backend.user.domain.User" id="result">
 		<result property="userIdx" column="user_idx" />
 		<result property="email" column="email" />
 		<result property="userType" column="user_type"/>
@@ -27,7 +27,7 @@
 		<result property="rankingYn" column="ranking_yn"/>
 	</resultMap>
 
-	<insert id="register" parameterType="com.project.backend.domain.User"
+	<insert id="register" parameterType="com.project.backend.user.domain.User"
 			useGeneratedKeys="true" keyProperty="userIdx">
 
 		INSERT INTO user_table
@@ -121,12 +121,12 @@
 		   AND a.class_name = #{className}
     </select>
 
-	<insert id="setgithublink" parameterType="com.project.backend.domain.User">
+	<insert id="setgithublink" parameterType="com.project.backend.user.domain.User">
 		INSERT INTO user_table SET
 		 	  github_link = #{link};
 	</insert>
 
-	<update id="update" parameterType="com.project.backend.domain.User">
+	<update id="update" parameterType="com.project.backend.user.domain.User">
 
 		UPDATE user_table SET
 			  email = #{email}
@@ -137,7 +137,7 @@
 
 	</update>
 
-	<update id="updateAuthkey" parameterType="com.project.backend.domain.User">
+	<update id="updateAuthkey" parameterType="com.project.backend.user.domain.User">
 		UPDATE user_table SET
 		      password = #{password}
 			, mail_key = #{mailKey}
