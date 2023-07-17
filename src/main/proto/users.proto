@@ -1,0 +1,41 @@
+syntax = "proto3";
+package users;
+
+import "google/protobuf/empty.proto";
+
+
+message CreateUserEvent {
+  int32 userID = 1;
+}
+
+message DeleteUserEvent {
+  int32 userID = 1;
+}
+
+message UserInfo {
+  int32 userID = 1;
+  string userLogin = 2;
+}
+
+message GetGithubStatsRequest {
+  repeated UserInfo users = 1;
+}
+
+message GithubStats {
+  int32 userID = 1;
+  int32 contributionCount = 2;
+  int32 starCount = 3;
+  int32 issueCount = 4;
+  int32 pullRequestCount = 5;
+  int32 contributedRepositoryCount = 6;
+}
+
+message GetGithubStatsResponse {
+  repeated GithubStats statElems = 1;
+}
+
+service UserEventService {
+  rpc PublishUserCreated(CreateUserEvent) returns (google.protobuf.Empty);
+  rpc PublishUserDeleted(DeleteUserEvent) returns (google.protobuf.Empty);
+  rpc GetGithubStats(GetGithubStatsRequest) returns (GetGithubStatsResponse);
+}

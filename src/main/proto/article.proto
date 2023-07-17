@@ -1,16 +1,141 @@
 syntax = "proto3";
-option java_multiple_files = true;
-package com.project.backend.proto;
+package articles;
 
-message HelloRequest {
-  string firstName = 1;
-  string lastName = 2;
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/empty.proto";
+
+message Duration {
+  google.protobuf.Timestamp start = 1;
+  google.protobuf.Timestamp end = 2;
 }
 
-message HelloResponse {
-  string greeting = 1;
+enum ArticleType {
+  GENERAL = 0;
+  TECH = 1;
 }
 
-service HelloService {
-  rpc hello(HelloRequest) returns (HelloResponse);
+message CreateArticleRequest {
+  int32 authorID = 1;
+  ArticleType type = 2;
+  string title = 3;
+}
+
+message CreateArticleResponse {
+  int32 articleID = 1;
+}
+
+enum ListArticleOrder {
+  TIME = 0;
+  VIEWS = 1;
+  LIKES = 2;
+}
+
+message ListArticleRequest {
+  int32 offset = 1;
+  int32 amount = 2;
+  ListArticleOrder order = 3;
+  int32 userID = 4;
+
+  // filters
+  ArticleType type = 5;
+  int32 authorID = 6;
+  Duration duration = 7;   // 시작일 ~ 종료일
+  string query = 8;
+}
+
+message ListArticleElement {
+  int32 articleID = 1;
+  int32 authorID = 2;
+  string title = 3;
+  string summary = 4;
+  ArticleType type = 5;
+  google.protobuf.Timestamp createdAt = 6;
+  bool isAuthor = 7;
+  bool isPrivate = 8;
+  int64 views = 9;
+  int32 likes = 10;
+  int32 comments = 11;
+  string thumbnail = 12;
+}
+
+message ListArticleResponse {
+  repeated ListArticleElement articles = 1;
+  int32 totalCount = 2;
+}
+
+message ListArticleByAuthorRequest {
+  int32 offset = 1;
+  int32 amount = 2;
+  ListArticleOrder order = 3;
+  int32 authorID = 4;
+  int32 userID = 5;
+
+  // filters
+  ArticleType type = 6;
+  bool isPrivate = 7;
+  Duration duration = 8;   // 시작일 ~ 종료일
+  string query = 9;
+}
+
+
+message GetArticleRequest {
+  int32 articleID = 1;
+  int32 userID = 2;
+}
+
+message GetArticleResponse {
+  int32 articleID = 1;
+  int32 authorID = 2;
+  ArticleType type = 3;
+  string title = 4;
+  google.protobuf.Timestamp createdAt = 5;
+  google.protobuf.Timestamp updatedAt = 6;
+  string body = 7;
+  int64 views = 8;
+  int32 likes = 9;
+  int32 comments = 10;
+  bool isPrivate = 11;
+  bool isLiked = 12;
+  bool isAuthor = 13;
+}
+
+message SetArticleVisibilityRequest {
+  int32 articleID = 1;
+  int32 userID = 2;
+  bool isPrivate = 3;
+}
+
+message UpdateArticleBodyRequest {
+  int32 articleID = 1;
+  int32 userID = 2;
+  string body = 3;
+}
+
+message UpdateArticleTitleRequest {
+  int32 articleID = 1;
+  int32 userID = 2;
+  string title = 3;
+}
+
+message DeleteArticleRequest {
+  int32 articleID = 1;
+  int32 userID = 2;
+}
+
+message ToggleArticleLikeRequest {
+  int32 articleID = 1;
+  int32 userID = 2;
+}
+
+
+service ArticleService {
+  rpc CreateArticle(CreateArticleRequest) returns (CreateArticleResponse);
+  rpc ListArticle(ListArticleRequest) returns (ListArticleResponse);
+  rpc ListArticleByAuthor(ListArticleByAuthorRequest) returns (ListArticleResponse);
+  rpc GetArticle(GetArticleRequest) returns (GetArticleResponse);
+  rpc UpdateArticleBody(UpdateArticleBodyRequest) returns (google.protobuf.Empty);
+  rpc UpdateArticleTitle(UpdateArticleTitleRequest) returns (google.protobuf.Empty);
+  rpc DeleteArticle(DeleteArticleRequest) returns (google.protobuf.Empty);
+  rpc SetArticleVisibility(SetArticleVisibilityRequest) returns (google.protobuf.Empty);
+  rpc ToggleArticleLike(ToggleArticleLikeRequest) returns (google.protobuf.Empty);
 }
