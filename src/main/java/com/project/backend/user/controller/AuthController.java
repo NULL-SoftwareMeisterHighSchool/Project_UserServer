@@ -17,8 +17,8 @@ import javax.mail.MessagingException;
 @RequestMapping("/auth")
 @AllArgsConstructor
 public class AuthController {
-    public final UserService userService;
-    final MailService mailService;
+    private final UserService userService;
+    private final MailService mailService;
 
     @PostMapping("/login")
     public ResponseEntity<TokenInfo> student_login(@RequestBody User user) {

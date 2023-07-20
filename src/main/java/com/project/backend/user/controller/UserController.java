@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
     private final UserService userService;
     private final MailService mailService;
-    private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
     @GetMapping("/edit/{id}")
     public ResponseEntity<User> edituser(@PathVariable int id) {
