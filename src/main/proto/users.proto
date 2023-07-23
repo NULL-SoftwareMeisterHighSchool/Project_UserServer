@@ -1,5 +1,5 @@
 syntax = "proto3";
-package users;
+package com.project.backend.article.protocode;
 
 import "google/protobuf/empty.proto";
 

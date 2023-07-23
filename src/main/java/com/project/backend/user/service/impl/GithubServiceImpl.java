@@ -1,4 +1,4 @@
-package com.project.backend.user.service.impl;
+package main.java.com.project.backend.user.service.impl;
 
 import com.project.backend.user.domain.User;
 import com.project.backend.user.service.GithubService;

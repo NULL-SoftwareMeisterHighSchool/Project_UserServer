@@ -1,5 +1,6 @@
 package com.project.backend.user.service;
 
+
 import com.project.backend.user.domain.TokenInfo;
 import com.project.backend.user.domain.User;
 import com.project.backend.user.domain.UserDTO;
@@ -120,9 +121,9 @@ public interface UserService {
     /**
      * 로그인 한다.
      *
+     * @return
      * @Param email 이메일
      * @Param password 비밀번호
-     * @return
      */
     public TokenInfo login(String email, String password);
 

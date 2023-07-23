@@ -1,6 +1,5 @@
 package com.project.backend.user.controller;
 
-import com.project.backend.JwtAuthenticationFilter;
 import com.project.backend.user.domain.User;
 import com.project.backend.user.service.MailService;
 import com.project.backend.user.service.UserService;

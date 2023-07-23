@@ -51,7 +51,6 @@
 			, #{schoolName}
 			, #{schoolYear}
 			, #{password}
-			, #{grade}
 			, now()
 			, #{approvedYn}
 			);

@@ -1,8 +1,8 @@
 package setting.common.controller;
 
-import setting.common.domain.CommonException;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
+import setting.common.domain.CommonException;
 
 
 public class RestControllerContext

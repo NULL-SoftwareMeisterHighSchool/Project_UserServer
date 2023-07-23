@@ -1,14 +1,14 @@
 package com.project.backend.user.service.impl;
 
-import com.project.backend.user.domain.UserDTO;
-import com.project.backend.user.service.MailService;
-import com.project.backend.user.service.UserService;
-import setting.common.domain.CommonException;
 import com.project.backend.JwtTokenProvider;
+import com.project.backend.article.Service.UsersService;
 import com.project.backend.user.domain.TokenInfo;
 import com.project.backend.user.domain.User;
+import com.project.backend.user.domain.UserDTO;
 import com.project.backend.user.domain.UserForSecurity;
 import com.project.backend.user.mapper.UserMapper;
+import com.project.backend.user.service.MailService;
+import com.project.backend.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
@@ -18,6 +18,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import setting.common.domain.CommonException;
 
 import javax.mail.MessagingException;
 import java.util.List;
@@ -32,6 +33,7 @@ public class UserServiceImpl implements UserService {
 	private final JwtTokenProvider jwtTokenProvider;
 	private final SqlSession sqlSession;
 	private final MailService mailService;
+	private final UsersService usersService;
 
 	@Override
 	public User getAuthorizedUser() {
@@ -149,7 +151,6 @@ public class UserServiceImpl implements UserService {
 			return false;
 		}
 		int userIdx = getwithemail(email).getUserIdx();
-
 		deleteuser(userIdx);
 
 		return true;
