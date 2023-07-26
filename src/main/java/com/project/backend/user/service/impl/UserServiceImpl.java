@@ -1,17 +1,15 @@
 package com.project.backend.user.service.impl;
 
 import com.project.backend.JwtTokenProvider;
-import com.project.backend.article.Service.UsersService;
-import com.project.backend.user.domain.TokenInfo;
-import com.project.backend.user.domain.User;
-import com.project.backend.user.domain.UserDTO;
-import com.project.backend.user.domain.UserForSecurity;
-import com.project.backend.user.mapper.UserMapper;
+import com.project.backend.user.entity.TokenInfo;
+import com.project.backend.user.entity.User;
+import com.project.backend.user.entity.UserDTO;
+import com.project.backend.user.entity.UserForSecurity;
+import com.project.backend.user.repository.UserRepository;
 import com.project.backend.user.service.MailService;
 import com.project.backend.user.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.apache.ibatis.session.RowBounds;
-import org.apache.ibatis.session.SqlSession;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
@@ -19,21 +17,20 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import setting.common.domain.CommonException;
-
 import javax.mail.MessagingException;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
-	private final UserMapper userMapper;
+
+	private final UserRepository userRepository;
 	private final PasswordEncoder passwordEncoder;
 	private final AuthenticationManagerBuilder authenticationManagerBuilder;
 	private final JwtTokenProvider jwtTokenProvider;
-	private final SqlSession sqlSession;
 	private final MailService mailService;
-	private final UsersService usersService;
 
 	@Override
 	public User getAuthorizedUser() {
@@ -61,8 +58,6 @@ public class UserServiceImpl implements UserService {
 				throw new CommonException("account expired");
 			}
 
-			user.setPassword(null);
-
 			return user;
 		} else {
 			throw new CommonException("not authorized");
@@ -72,24 +67,23 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User getwithidx(int idx) {
-		return userMapper.get(idx);
+		return userRepository.getUserByUserIdx(idx);
 	}
 
 	@Override
 	public User getwithemail(String email) {
-		return userMapper.getByEmail(email);
+		return userRepository.findUserByEmail(email);
 	}
 
 	@Override
 	public List<User> getUserList(int offset, int count) {
-
-		RowBounds rowBounds = new RowBounds(offset, count);
-		return sqlSession.selectList("UserMapper.getUserList", null, rowBounds);
+		PageRequest pageRequest = PageRequest.of(offset, count);
+		return userRepository.findUserByWithdrawed("N", pageRequest);
 	}
 
 	@Override
 	public int getCount() {
-		return userMapper.getCount();
+		return userRepository.countByWithdrawedFalse();
 	}
 	
 	@Override
@@ -103,7 +97,7 @@ public class UserServiceImpl implements UserService {
 			user.setApprovedYn("N");
 		}
 
-		userMapper.register(user);
+		userRepository.save(user);
 		return getwithidx(user.getUserIdx());
 	}
 
@@ -126,7 +120,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User update(int idx, User updateuser) {
-		User user = userMapper.get(idx);
+		User user = userRepository.getUserByUserIdx(idx);
 
 		if ( user != null) {
 			user.setEmail(updateuser.getEmail());
@@ -134,13 +128,10 @@ public class UserServiceImpl implements UserService {
 			user.setUserid(updateuser.getUserid());
 			user.setSchoolYear(updateuser.getSchoolYear());
 		}
+		userRepository.save(user);
 		return user;
 	}
 
-	@Override
-	public void updateMailAuth(User user) {
-		userMapper.updateAuthkey(user);
-	}
 
 	@Override
 	public boolean withdraw(String email) {
@@ -156,18 +147,51 @@ public class UserServiceImpl implements UserService {
 		return true;
 	}
 
+	@Override
+	public void updateMailAuth(User user) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	}
+
 	private void deleteuser(int userIdx) {
-		userMapper.delete(userIdx);
+		User user = userRepository.findUserByUserIdx(userIdx);
+		userRepository.delete(user);
 	}
 	
 	@Override
 	public void approve(int userIdx) {
-		userMapper.updateApprove(userIdx);
+		User user = userRepository.findUserByUserIdx(userIdx);
+		user.setApprovedYn("Y");
+
+		userRepository.save(user);
 	}
 
 	@Override
 	public void updateLastLoginTime(String email) {
-		userMapper.updateLastLoginTime(email);
+		User user = userRepository.findUserByEmail(email);
+		user.setLastLoginTime(String.valueOf(LocalDateTime.now()));
+		userRepository.save(user);
 	}
 	
 	@Override
@@ -180,9 +204,9 @@ public class UserServiceImpl implements UserService {
 		if (!isPasswordMatched(user, oldPassword)) {
 			throw new CommonException("password mismatch");
 		}
-		
-		userMapper.updatePassword(user.getUserIdx(), passwordEncoder.encode(newPassword));
 
+		user.setPassword(oldPassword);
+		userRepository.save(user);
 		return true;
 	}
 

@@ -1,7 +1,7 @@
 package com.project.backend;
 
 
-import com.project.backend.user.domain.TokenInfo;
+import com.project.backend.user.entity.TokenInfo;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;

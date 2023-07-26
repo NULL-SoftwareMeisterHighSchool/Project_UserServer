@@ -1,4 +1,4 @@
-package com.project.backend.user.domain;
+package com.project.backend.user.entity;
 
 public class UserDTO {
     private String email;

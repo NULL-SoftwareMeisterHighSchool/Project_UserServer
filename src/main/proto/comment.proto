@@ -23,7 +23,7 @@ message GetCommentsByArticleIDRequest {
   int32 userID = 2;
 }
 
-message CommentElement {
+message CommentElem {
   int32 commentID = 1;
   int32 authorID = 2;
   string body = 3;
@@ -33,7 +33,7 @@ message CommentElement {
 }
 
 message GetCommentsByArticleIDResponse {
-  repeated CommentElement comments = 1;
+  repeated CommentElem comments = 1;
 }
 
 message GetRepliesByCommentIDRequest {
@@ -42,7 +42,7 @@ message GetRepliesByCommentIDRequest {
   int32 userID = 3;
 }
 
-message ReplyElement {
+message ReplyElem {
   int32 commentID = 1;
   int32 authorID = 2;
   string body = 3;
@@ -51,7 +51,7 @@ message ReplyElement {
 }
 
 message GetRepliesByCommentIDResponse {
-  repeated ReplyElement replies = 1;
+  repeated ReplyElem replies = 1;
 }
 
 service CommentService {

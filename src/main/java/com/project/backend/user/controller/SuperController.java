@@ -1,6 +1,6 @@
 package com.project.backend.user.controller;
 
-import com.project.backend.user.domain.User;
+import com.project.backend.user.entity.User;
 import com.project.backend.user.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;

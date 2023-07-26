@@ -1,9 +1,9 @@
 package com.project.backend.user.service;
 
 
-import com.project.backend.user.domain.TokenInfo;
-import com.project.backend.user.domain.User;
-import com.project.backend.user.domain.UserDTO;
+import com.project.backend.user.entity.TokenInfo;
+import com.project.backend.user.entity.User;
+import com.project.backend.user.entity.UserDTO;
 
 import java.util.List;
 

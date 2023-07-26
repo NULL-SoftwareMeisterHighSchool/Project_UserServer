@@ -1,7 +1,7 @@
 package com.project.backend.article.Service.Impl;
 
 import com.project.backend.article.Service.UsersService;
-import com.project.backend.article.domain.UserRanking;
+import com.project.backend.article.entity.UserRanking;
 import com.project.backend.article.protocode.Users;
 import org.springframework.stereotype.Service;
 

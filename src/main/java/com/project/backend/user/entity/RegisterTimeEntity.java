@@ -1,4 +1,4 @@
-package com.project.backend.user.domain;
+package com.project.backend.user.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;

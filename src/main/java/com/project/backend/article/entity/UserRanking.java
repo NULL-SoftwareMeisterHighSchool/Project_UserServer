@@ -1,4 +1,4 @@
-package com.project.backend.article.domain;
+package com.project.backend.article.entity;
 
 public class UserRanking {
     private int userID;

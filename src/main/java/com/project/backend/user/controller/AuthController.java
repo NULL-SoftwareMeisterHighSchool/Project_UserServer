@@ -1,18 +1,16 @@
 package com.project.backend.user.controller;
 
-import com.project.backend.user.domain.TokenInfo;
-import com.project.backend.user.domain.User;
-import com.project.backend.user.domain.UserDTO;
+import com.project.backend.JwtTokenProvider;
+import com.project.backend.user.entity.TokenInfo;
+import com.project.backend.user.entity.User;
+import com.project.backend.user.entity.UserDTO;
 import com.project.backend.user.service.MailService;
 import com.project.backend.user.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
 
@@ -22,13 +20,19 @@ import javax.mail.MessagingException;
 public class AuthController {
     private final UserService userService;
     private final MailService mailService;
+    private final JwtTokenProvider jwtTokenProvider;
 
     @PostMapping("/login")
-    public ResponseEntity<TokenInfo> student_login(@RequestBody User user) {
+    public ResponseEntity<String> student_login(@RequestHeader("Authorization") String authorizationHeader, @RequestBody User user) {
+        String token = authorizationHeader.substring(7);
+
+        if (jwtTokenProvider.validateToken(token)) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid or expired token.");
+        }
         TokenInfo tokenInfo = userService.login(user.getEmail(), user.getPassword());
 
         if (tokenInfo != null) {
-            return ResponseEntity.ok(tokenInfo);
+            return ResponseEntity.status(HttpStatus.OK).body("성공");
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
