@@ -14,7 +14,7 @@ public class CommentController {
     private CommentService commentService;
     private JwtTokenProvider jwtTokenProvider;
 
-    @PostMapping("/create")
+    @PostMapping("/")
     public ResponseEntity<?> createComment(@RequestHeader ("Authorization") String authorizationHeader,@RequestBody Comment.CreateCommentRequest request) {
         String token = authorizationHeader.substring(7);
 
@@ -29,8 +29,8 @@ public class CommentController {
         }
     }
 
-    @DeleteMapping("/delete")
-    public ResponseEntity<?> deleteComment(@RequestHeader ("Authorization") String authorizationHeader,@RequestBody Comment.DeleteCommentRequest request) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteComment(@RequestHeader ("Authorization") String authorizationHeader, @PathVariable int id, @RequestParam int articleid, @RequestParam int userid) {
         String token = authorizationHeader.substring(7);
 
         if (!jwtTokenProvider.validateToken(token)) {
@@ -38,10 +38,16 @@ public class CommentController {
         }
 
         try {
-            commentService.deleteComment(request);
-            return ResponseEntity.ok("댓글 삭제 성공");
+            Comment.DeleteCommentRequest deleteCommentRequest = Comment.DeleteCommentRequest.newBuilder()
+                    .setCommentID(id)
+                    .setArticleID(articleid)
+                    .setUserID(userid)
+                    .build();
+
+            commentService.deleteComment(deleteCommentRequest);
+            return ResponseEntity.status(HttpStatus.OK).body("댓글 삭제 완료");
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("댓글 삭제 실패 : " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("댓글 삭제 실패 : " + e.getMessage());
         }
     }
 
@@ -54,7 +60,7 @@ public class CommentController {
                     .build();
 
             Comment.GetCommentsByArticleIDResponse response = commentService.getCommentsByArticleID(request);
-            return ResponseEntity.ok(response);
+            return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("에러 메세지 : " + e.getMessage());
         }
