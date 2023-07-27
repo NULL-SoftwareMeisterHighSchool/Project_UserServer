@@ -3,7 +3,6 @@ package com.project.backend.user.controller;
 import com.project.backend.JwtTokenProvider;
 import com.project.backend.user.entity.TokenInfo;
 import com.project.backend.user.entity.User;
-import com.project.backend.user.entity.UserDTO;
 import com.project.backend.user.service.MailService;
 import com.project.backend.user.service.UserService;
 import lombok.AllArgsConstructor;
@@ -12,10 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.mail.MessagingException;
-
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/user")
 @AllArgsConstructor
 public class AuthController {
     private final UserService userService;
@@ -39,16 +36,22 @@ public class AuthController {
     }
 
     @PostMapping("/sendcode")
-    public ResponseEntity<String> sendcode(String email) throws MessagingException {
-        mailService.sendmail(email) ;
-        return ResponseEntity.ok("hello");
+    public ResponseEntity<?> sendcode(String email) {
+        try {
+            if ( userService.getwithemail(email) == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("존재하지 않는 이메일");
+            }
+            return new ResponseEntity<>(mailService.sendmail(email), HttpStatus.OK);
+        }catch ( Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("에러메시지 : " + e.getMessage());
+        }
     }
 
     @PostMapping("/signup/student")
-    public ResponseEntity<String> student_register(@RequestBody UserDTO userDTO) {
+    public ResponseEntity<String> student_register(@RequestBody User user) {
         try {
-            userService.register(userDTO);
-            userDTO.setUserType("S");
+            user.setUserType("S");
+            userService.register(user);
             return ResponseEntity.ok("User registered successfully");
         } catch (IllegalArgumentException e) { // 입력값이 유효하지 않음 ( Bad Request ) - 400
             return ResponseEntity.badRequest().body("Invalid input" + e.getMessage());
@@ -61,10 +64,10 @@ public class AuthController {
     }
 
     @PostMapping("/signup/graduated")
-    public ResponseEntity<String> graduated_register(@RequestBody UserDTO userDTO) {
+    public ResponseEntity<String> graduated_register(@RequestBody User user) {
         try {
-            userService.register(userDTO);
-            userDTO.setUserType("G");
+            user.setUserType("G");
+            userService.register(user);
             return ResponseEntity.ok("User registered successfully");
         } catch (IllegalArgumentException e) { // 입력값이 유효하지 않음 ( Bad Request ) - 400
             return ResponseEntity.badRequest().body("Invalid input" + e.getMessage());

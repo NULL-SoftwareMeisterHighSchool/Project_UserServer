@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/admin")
+@RequestMapping("/user")
 @AllArgsConstructor
 public class SuperController {
 
@@ -21,6 +21,4 @@ public class SuperController {
         return userService.getUserList(0, userService.getCount());
     }
 
-    //이메일로 유저 검색
-    //
 }

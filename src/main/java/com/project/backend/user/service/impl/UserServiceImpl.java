@@ -3,7 +3,6 @@ package com.project.backend.user.service.impl;
 import com.project.backend.JwtTokenProvider;
 import com.project.backend.user.entity.TokenInfo;
 import com.project.backend.user.entity.User;
-import com.project.backend.user.entity.UserDTO;
 import com.project.backend.user.entity.UserForSecurity;
 import com.project.backend.user.repository.UserRepository;
 import com.project.backend.user.service.MailService;
@@ -17,6 +16,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import setting.common.domain.CommonException;
+
 import javax.mail.MessagingException;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -87,8 +87,7 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
-	public User register(UserDTO userDTO) {
-		User user = convertToUser(userDTO);
+	public User register(User user) {
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
 
 		if ("G".equals(user.getUserType())) {
@@ -96,24 +95,12 @@ public class UserServiceImpl implements UserService {
 		} else {
 			user.setApprovedYn("N");
 		}
+		user.setRegisterTime(String.valueOf(LocalDateTime.now()));
 
 		userRepository.save(user);
+
 		return getwithidx(user.getUserIdx());
 	}
-
-	private User convertToUser(UserDTO userDTO) {
-		User user = new User();
-		user.setEmail(userDTO.getEmail());
-		user.setName(userDTO.getName());
-		user.setUserid(userDTO.getUserid());
-		user.setUserType(userDTO.getUserType());
-		user.setPassword(userDTO.getPassword());
-		user.setSchoolName(userDTO.getschoolName());
-		user.setSchoolYear(userDTO.getSchoolYear());
-
-		return user;
-	}
-
 
 
 
@@ -128,6 +115,7 @@ public class UserServiceImpl implements UserService {
 			user.setUserid(updateuser.getUserid());
 			user.setSchoolYear(updateuser.getSchoolYear());
 		}
+		user.setUpdateTime(String.valueOf(LocalDateTime.now()));
 		userRepository.save(user);
 		return user;
 	}
@@ -142,40 +130,16 @@ public class UserServiceImpl implements UserService {
 			return false;
 		}
 		int userIdx = getwithemail(email).getUserIdx();
+		User user = userRepository.findUserByUserIdx(userIdx);
+		user.setWithdrawed_time(String.valueOf(LocalDateTime.now()));
 		deleteuser(userIdx);
 
 		return true;
 	}
 
-	@Override
-	public void updateMailAuth(User user) {
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	}
-
 	private void deleteuser(int userIdx) {
 		User user = userRepository.findUserByUserIdx(userIdx);
+		user.setDeletedTime(String.valueOf(LocalDateTime.now()));
 		userRepository.delete(user);
 	}
 	
@@ -204,7 +168,6 @@ public class UserServiceImpl implements UserService {
 		if (!isPasswordMatched(user, oldPassword)) {
 			throw new CommonException("password mismatch");
 		}
-
 		user.setPassword(oldPassword);
 		userRepository.save(user);
 		return true;

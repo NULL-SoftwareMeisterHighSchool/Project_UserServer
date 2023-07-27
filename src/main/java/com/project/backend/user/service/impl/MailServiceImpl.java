@@ -36,8 +36,7 @@ public class MailServiceImpl implements MailService {
                     break;
             }
         }
-        authcode = key.toString();
-        return authcode;
+        return key.toString();
     }
 
     @Override
@@ -63,7 +62,6 @@ public class MailServiceImpl implements MailService {
 
     @Override
     public String returnsentcode() {
-        String sentcode = authcode;
-        return sentcode;
+        return authcode;
     }
 }

@@ -17,7 +17,7 @@ public interface MailService {
     public String sendmail(String email) throws MessagingException;
 
     /**
-     * @return 인증코드
+     * @return
      */
     String returnsentcode();
 }

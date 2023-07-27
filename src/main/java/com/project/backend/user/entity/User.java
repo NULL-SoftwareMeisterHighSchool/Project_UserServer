@@ -46,12 +46,12 @@ public class User extends RegisterTimeEntity {
     /**
      * 학교
      */
-    private Integer schoolName;
+    private Schoolenum school;
 
     /**
      * 입학년도
      */
-    private Integer schoolYear;
+    private Integer admission_year;
 
     /**
      * 승인 여부
@@ -86,7 +86,7 @@ public class User extends RegisterTimeEntity {
     /**
      * 깃허브 링크
      */
-    private String github_link;
+    private String githubId;
 
     public Integer getUserIdx() {
         return userIdx;
@@ -112,12 +112,12 @@ public class User extends RegisterTimeEntity {
         return password;
     }
 
-    public Integer getSchoolName() {
-        return schoolName;
+    public Schoolenum getSchoolName() {
+        return school;
     }
 
     public Integer getSchoolYear() {
-        return schoolYear;
+        return admission_year;
     }
 
     public String getApprovedYn() {
@@ -145,7 +145,7 @@ public class User extends RegisterTimeEntity {
     }
 
     public String getGithub_link() {
-        return github_link;
+        return githubId;
     }
 
     public void setUserIdx(Integer userIdx) {
@@ -172,12 +172,12 @@ public class User extends RegisterTimeEntity {
         this.password = password;
     }
 
-    public void setSchoolName(Integer schoolName) {
-        this.schoolName = schoolName;
+    public void setSchoolName(Schoolenum schoolName) {
+        this.school = schoolName;
     }
 
     public void setSchoolYear(Integer schoolYear) {
-        this.schoolYear = schoolYear;
+        this.admission_year = schoolYear;
     }
 
     public void setApprovedYn(String approvedYn) {
@@ -205,6 +205,6 @@ public class User extends RegisterTimeEntity {
     }
 
     public void setGithub_link(String github_link) {
-        this.github_link = github_link;
+        this.githubId = github_link;
     }
 }

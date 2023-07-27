@@ -3,7 +3,6 @@ package com.project.backend.user.service;
 
 import com.project.backend.user.entity.TokenInfo;
 import com.project.backend.user.entity.User;
-import com.project.backend.user.entity.UserDTO;
 
 import java.util.List;
 
@@ -53,7 +52,7 @@ public interface UserService {
      * @param user 사용자 정보
      * @return 등록된 사용자의 idx
      */
-    public User register(UserDTO user);
+    public User register(User user);
 
     /**
      * 사용자 정보를 갱신한다.
@@ -70,13 +69,6 @@ public interface UserService {
      * @return
      */
     public boolean withdraw(String email);
-
-    /**
-     * 주어진 email 사용자의 인증키와 인증시간, 비밀번호를 변경 한다
-     *
-     * @param user 유저정보
-     */
-    public void updateMailAuth(User user);
 
     /**
      * 주어진 idx을 가진 회원을 승인한다.
