@@ -1,6 +1,5 @@
 package com.project.backend.article.Service;
 
-
 import com.project.backend.article.protocode.Users;
 
 public interface UsersService {

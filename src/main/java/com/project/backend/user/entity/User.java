@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-@Entity
+@Entity(name = "user_table")
 @NoArgsConstructor
 @AllArgsConstructor
 public class User extends RegisterTimeEntity {
@@ -51,7 +51,7 @@ public class User extends RegisterTimeEntity {
     /**
      * 입학년도
      */
-    private Integer admission_year;
+    private Integer admissionYear;
 
     /**
      * 승인 여부
@@ -117,7 +117,7 @@ public class User extends RegisterTimeEntity {
     }
 
     public Integer getSchoolYear() {
-        return admission_year;
+        return admissionYear;
     }
 
     public String getApprovedYn() {
@@ -177,7 +177,7 @@ public class User extends RegisterTimeEntity {
     }
 
     public void setSchoolYear(Integer schoolYear) {
-        this.admission_year = schoolYear;
+        this.admissionYear = schoolYear;
     }
 
     public void setApprovedYn(String approvedYn) {

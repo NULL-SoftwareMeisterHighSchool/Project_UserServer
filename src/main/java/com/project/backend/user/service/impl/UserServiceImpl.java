@@ -7,8 +7,7 @@ import com.project.backend.user.entity.UserForSecurity;
 import com.project.backend.user.repository.UserRepository;
 import com.project.backend.user.service.MailService;
 import com.project.backend.user.service.UserService;
-import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
@@ -22,9 +21,16 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
+	@Autowired
+	public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthenticationManagerBuilder authenticationManagerBuilder, JwtTokenProvider jwtTokenProvider, MailService mailService) {
+		this.userRepository = userRepository;
+		this.passwordEncoder = passwordEncoder;
+		this.authenticationManagerBuilder = authenticationManagerBuilder;
+		this.jwtTokenProvider = jwtTokenProvider;
+		this.mailService = mailService;
+	}
 
 	private final UserRepository userRepository;
 	private final PasswordEncoder passwordEncoder;
@@ -67,7 +73,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User getwithidx(int idx) {
-		return userRepository.getUserByUserIdx(idx);
+		return userRepository.findUserByUserIdx(idx);
 	}
 
 	@Override
@@ -77,13 +83,13 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public List<User> getUserList(int offset, int count) {
-		PageRequest pageRequest = PageRequest.of(offset, count);
-		return userRepository.findUserByWithdrawed("N", pageRequest);
+	//	return userRepository.findUsersByWithdrawed("N", offset, count);
+		return null;
 	}
 
 	@Override
 	public int getCount() {
-		return userRepository.countByWithdrawedFalse();
+		return userRepository.countByWithdrawed("N");
 	}
 	
 	@Override
@@ -102,12 +108,9 @@ public class UserServiceImpl implements UserService {
 		return getwithidx(user.getUserIdx());
 	}
 
-
-
-
 	@Override
 	public User update(int idx, User updateuser) {
-		User user = userRepository.getUserByUserIdx(idx);
+		User user = userRepository.findUserByUserIdx(idx);
 
 		if ( user != null) {
 			user.setEmail(updateuser.getEmail());
@@ -119,7 +122,6 @@ public class UserServiceImpl implements UserService {
 		userRepository.save(user);
 		return user;
 	}
-
 
 	@Override
 	public boolean withdraw(String email) {
