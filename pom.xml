@@ -10,9 +10,9 @@
     </parent>
     <groupId>com.project</groupId>
     <artifactId>backend</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-    <packaging>war</packaging>
-    <name>backend</name>
+    <version>0.0.1</version>
+    <packaging>jar</packaging>
+    <name>userserver</name>
     <description>backend</description>
     <properties>
         <java.version>17</java.version>
@@ -25,6 +25,7 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.30</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -65,10 +66,6 @@
             <artifactId>spring-boot-starter-mail</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jdbc</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.thymeleaf</groupId>
             <artifactId>thymeleaf</artifactId>
             <version>3.1.1.RELEASE</version>
@@ -83,11 +80,7 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-websocket</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.data</groupId>
-            <artifactId>spring-data-jpa</artifactId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
         <dependency>
             <groupId>javax.persistence</groupId>
@@ -123,6 +116,7 @@
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
         </dependency>
+
     </dependencies>
     <build>
         <plugins>
@@ -140,7 +134,7 @@
                         </goals>
                         <configuration>
                             <executable>protoc</executable>
-                            <workingDirectory>${project.basedir}/src/main/proto</workingDirectory>
+                            <workingDirectory>../../404/404/src/main/proto</workingDirectory>
                             <arguments>
                                 <argument>--java_out=${project.basedir}/src/main/java</argument>
                                 <argument>.</argument>
